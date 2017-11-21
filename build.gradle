@@ -1,0 +1,53 @@
+plugins {
+    id 'org.springframework.boot' version '1.5.7.RELEASE'
+    id "com.moowork.node" version "1.2.0"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'war'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	providedRuntime
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+node {
+  download = false
+  nodeModulesDir = file("frontend")
+}
+
+task buildClientDev(type: NpmTask, dependsOn: 'npmInstall') {
+  group = 'build'
+  description = 'Compile client side folder for development'
+  args = ['run','buildDev']
+}
+
+task buildClient(type: NpmTask, dependsOn: 'npmInstall') {
+  group = 'build'
+  description = 'Compile client side folder for production'
+  args = ['run','build']
+}
+
+task buildClientWatch(type: NpmTask, dependsOn: 'npmInstall') {
+  group = 'application'
+  description = "Build and watches the client side assets for rebuilding"
+  args = ['run','buildWatch']
+}
+
+bootRun.dependsOn(buildClientDev)
+war.dependsOn(buildClient)
+
