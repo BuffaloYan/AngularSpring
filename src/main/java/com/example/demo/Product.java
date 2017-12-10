@@ -1,6 +1,9 @@
 package com.example.demo;
 
 public class Product {
+	public Product() {
+		
+	}
 	public Product(int id, String name, String category, double price) {
 		super();
 		this.id = id;

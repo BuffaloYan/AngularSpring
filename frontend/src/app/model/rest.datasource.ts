@@ -26,7 +26,7 @@ export class RestDataSource {
 
     updateProduct(product: Product): Observable<Product> {
         return this.sendRequest(RequestMethod.Put,
-            `${this.url}/${product.id}`, product);
+            `${this.url}`, product);
     }
 
     deleteProduct(id: number): Observable<Product> {
@@ -46,7 +46,7 @@ export class RestDataSource {
             body: body,
             headers: headers
         }))
-        .delay(5000)
+        .delay(1000)
         .map(function(response) {
             return response.json();
         })
@@ -68,7 +68,7 @@ export class RestDataSource {
             body: body,
             headers: headers
         }))
-        .delay(5000)
+        .delay(1000)
         .map(function(response) {
             return response.json();
         })

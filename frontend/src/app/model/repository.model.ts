@@ -43,7 +43,9 @@ export class Model {
     saveProduct(product: Product) {
         if (product.id === 0 || product.id == null) {
             this.dataSource.saveProduct(product)
-                .subscribe(p => this.products.push(p));
+                .subscribe(p => 
+                  this.products.push(p)
+                );
         } else {
             this.dataSource.updateProduct(product).subscribe(p => {
                 let index = this.products
